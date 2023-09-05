@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+        }
+
+        nav {
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+
+        .card {
+            width: 300px;
+            margin: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            background-color: #fff;
+        }
+
+        .card h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .card h3 {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 16px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+        
+                <a href="/createBlog">Add Blog</a>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+            
+        </nav>
+    </header>
+
+    <div class="container" >
+        <div class="card">
+            <h2>Card 1</h2>
+            <h3>Subtitle 1</h3>
+            <p>Description for Card 1.</p>
+        </div>
+        
+        <div class="card">
+            <h2>Card 2</h2>
+            <h3>Subtitle 2</h3>
+            <p>Description for Card 2.</p>
+        </div>
+        
+        <div class="card">
+            <h2>Card 3</h2>
+            <h3>Subtitle 3</h3>
+            <p>Description for Card 3.</p>
+        </div>
+    </div>
+</body>
+</html>
