@@ -1,6 +1,6 @@
 const dbConfig = require("../config/dbConfig");
 const { Sequelize, DataTypes } = require("sequelize");
-
+// sequelize lai data lagna order dine
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
@@ -28,6 +28,7 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 //importing model files
 db.blogs = require("./blogModel.js")(sequelize, DataTypes);
+// db.blogs= require('./userModel')(sequelize,DataTypes)
 // db.reviews = require("./reviewModel.js")(sequelize, DataTypes);
 
 db.sequelize.sync({ force: false}).then(() => {

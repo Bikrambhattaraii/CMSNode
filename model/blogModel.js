@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Blog = sequelize.define("blog", {
+    const Blogs = sequelize.define("blog", {
       title: {
         type: DataTypes.STRING,
         allowNull: false,  // empty vayo vane error aucha
@@ -14,5 +14,5 @@ module.exports = (sequelize, DataTypes) => {
       },
       
     });
-    return Blog;
+    return Blogs;
   };
