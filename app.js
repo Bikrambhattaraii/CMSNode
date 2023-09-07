@@ -1,4 +1,4 @@
-const express=require("express")
+const express= require("express")
 const { blogs } = require("./model/index")
 const app =express()
 // telling node js to set view engine
@@ -10,8 +10,12 @@ app.use(express.json) // form bata li nodejs lai vanna lai
 require('./model/index')
 app.use(express.urlencoded({extended:true}))
 // allblogs
-app.get('/',(req,res)=>{
-    res.render('blogs') // blogs.ejs halda ni huncah
+app.get('/', async(req,res)=>{
+    // table bata data nikalnu paryo
+     const allBlogs = await blogs.findAll()  //mongodb .find()  // blogs ko table ko data allBlogs ma store
+     console.log(allBlogs)
+    res.render('blogs',{blogs:allBlogs}) // blogs ma ako data all blogs ma pass garne {blogs:allBlogs} le ejs file lai  
+    // blogs.ejs halda ni huncah
 })
 //createBlog
 app.get('/createBlog',(req,res)=>{
@@ -33,13 +37,10 @@ app.post("/createBlog",async (req,res)=>{
     description:description,  
  })  
  
-
-
-
-
     //req.body.title or description ni halna milcha 
-    res.send("form submitted successfully") 
+    res.redirect("/") 
 })
+// find() database bata tanne
 //createBlog set 
 app.listen(3000,()=>{
     console.log("Node Js project ")
