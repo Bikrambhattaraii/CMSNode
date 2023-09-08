@@ -1,5 +1,6 @@
 const express= require("express")
 const { blogs } = require("./model/index")
+const { EDGE_RUNTIME_WEBPACK } = require("next/dist/shared/lib/constants")
 const app =express()
 // telling node js to set view engine
 app.set('view engine','ejs')
@@ -21,6 +22,26 @@ app.get('/', async(req,res)=>{
 app.get('/createBlog',(req,res)=>{
     res.render('createBlog')
 })
+// single blog
+app.get('/singleBlog:id',async(req,res)=>{
+    const id =req.params.id
+    // 
+    // const{id}=req.params
+    console.log(req.params.id)
+    res.render('singleBlog')
+
+    // id ko data magne orfind garne table bata
+  await  blogs.findAll({
+        where:{
+            id:id
+        }
+    })
+  
+
+    console.log(blog)
+    res.render('singleBlogs',{blog:blog} )
+})
+
 //createBlog post 
 app.post("/createBlog",async (req,res)=>{
     // const title =req.body.title 
