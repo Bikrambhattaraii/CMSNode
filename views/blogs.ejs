@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -75,17 +74,24 @@
     </header>
 
     <div class="container">
-      
-   <% blogs.length > 0 ? && blogs.forEach((blog) =>{  %>
-        <div class="card">
-            <h2><%- blogs.title  %>    </h2>
-            <h3><%- blogs.subTitle %></h3>
-            <p><%- blogs.description  %></p>
-            <a href="/single" >see more</a>
-        </div>
- <%  }) %>
-    
-    </div>
 
+      <%  if(blogs.length == 0){ %>
+        <h1>No Blogs</h1>
+
+      <%  }else{ %>
+            <% blogs.forEach((blog)=>{ %>
+                <div class="card">
+                    <h2><%- blog.title  %></h2>
+                    <h3><%- blog.subTitle %></h3>
+                    <p><%- blog.description.slice(0,100) %>...</p>
+                    <a href="/single/<%-blog.id %>">Read More</a>
+                </div>
+        <%       }) %>
+        
+        <% } %>
+
+
+     
+    </div>
 </body>
 </html>
