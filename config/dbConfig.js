@@ -2,9 +2,9 @@ module.exports = {
     HOST: "localhost",
     USER: "root",
     PASSWORD: "",
-    DB: "cms", //database name
-    dialect: "mysql",  // database used
-    pool: {   //database le kati request handle garne
+    DB: "sepcms",
+    dialect: "mysql",
+    pool: {
       max: 5,
       min: 0,
       acquire: 30000,

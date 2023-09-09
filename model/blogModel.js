@@ -1,18 +1,19 @@
 module.exports = (sequelize, DataTypes) => {
-    const Blogs = sequelize.define("blog", {
+    const Blog = sequelize.define("blog", {
       title: {
         type: DataTypes.STRING,
-        allowNull: false,  // empty vayo vane error aucha
+        allowNull: false,
       },
       subTitle: {
         type: DataTypes.STRING,
-        allowNull:false,
+        allowNull : false
       },
       description: {
         type: DataTypes.TEXT,
-        allowNull:false,
+        allowNull:false
       },
       
+    
     });
-    return Blogs;
+    return Blog;
   };

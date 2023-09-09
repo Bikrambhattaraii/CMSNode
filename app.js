@@ -1,8 +1,9 @@
-const express= require("express")
-const { blogs } = require("./model/index")
+const express = require('express')
+const { blogs } = require('./model/index')
+const app = express()
 
-const app =express()
-// telling node js to set view engine
+
+
 // database connection 
 require("./model/index")
 
