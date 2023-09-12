@@ -122,6 +122,9 @@ app.post("/editBlog/:id",async (req,res)=>{
     res.redirect("/single/" + id)  // update vayesi kun  page ko id ma jane 
 })
 
+//node js lai file access garna dey vanera prermission magne
+
+app.set(express.static("public/")) 
 app.listen(3000,()=>{
     console.log("NodeJs project has started at port 3000")
 })

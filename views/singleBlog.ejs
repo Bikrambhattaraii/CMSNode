@@ -64,6 +64,8 @@
 <body>
     <header>
         <h1>CMS</h1>
+        <%- include("component/navbar")  %> 
+
     </header>
 
     <div class="container">
@@ -85,5 +87,6 @@
         <button>  <a href="/edit/<%- blog[0].id %>">edit
         </a></button>
     </div>
+    <%- include('component/footer') %>
 </body>
 </html>

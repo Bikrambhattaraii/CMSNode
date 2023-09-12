@@ -69,10 +69,7 @@
 <body>
     <header>
         <h1>Add Blog</h1>
-        <nav>
-            <a href="/">Home</a>
-          
-        </nav>
+        <%- include("component/navbar")  %> 
     </header>
 
     <div class="container">
@@ -92,6 +89,7 @@
             </div>
             <button type="submit">Submit</button>
         </form>
+        <%- include('component/footer') %>
     </div>
 </body>
 </html>
