@@ -124,7 +124,7 @@ app.post("/editBlog/:id",async (req,res)=>{
 
 //node js lai file access garna dey vanera prermission magne
 
-app.set(express.static("public/")) 
+app.use(express.static("public/")) 
 app.listen(3000,()=>{
     console.log("NodeJs project has started at port 3000")
 })
