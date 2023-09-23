@@ -1,130 +1,25 @@
 const express = require('express')
-const { blogs } = require('./model/index')
 const app = express()
 
-
+//routes
+const blogRoute = require("./routes/blogRoute")
+const authRoute=require('./routes/authRoute')
 
 // database connection 
 require("./model/index")
 
-// telling the nodejs to set view-engine to ejs
+// view engine
 app.set('view engine','ejs')
 
+// poublic ma vako files haru excess garne
+app.use(express.static("public/"))
 
 // form bata data aairaxa parse gara or handle gar vaneko ho
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
-
-// allBlog
-app.get("/",async (req,res)=>{
-    //blogs vanney table bata vayejati sabai data dey vaneko 
-    const allBlogs = await blogs.findAll() 
-
-    // blogs vanney key/name ma allBlogs/data pass gareko ejs file lai
-    res.render('blogs',{blogs:allBlogs})
-})
-
-//createBlog
-app.get("/createBlog",(req,res)=>{
-    res.render("createBlog")
-})
-
-//createBlog Post
-app.post("/createBlog",async (req,res)=>{
-    
-        // second approach
-        // const {title,description,subtitle} = req.body
-    // first approach
-    const title = req.body.title
-    const description  = req.body.description
-    const subTitle = req.body.subtitle
-   
-    // database ma halnu paryo , database sanaga kehi operation await halnu parney hunchha 
-    // agadi , await halepaxi mathi async halnu parney hunchha 
-    await blogs.create({
-        title : title,
-        subTitle:subTitle,
-        description : description
-    })
-    res.redirect("/")
-})
-
-// single blog page 
-app.get("/single/:id",async(req,res)=>{
-const id = req.params.id
-// second approach
-// const {id} = req.params 
-// id ko data magnu/find garnu paryo hamro table bata
-const blog =  await blogs.findAll({
-    where : {
-        id : id
-    }
-})
-// second finding approach
-// const blog = await blogs.findByPk(id)
-
-    res.render("singleBlog",{blog:blog})
-})
-
-// delete blog
-app.get("/delete/:id",async (req,res)=>{
-    const id = req.params.id
-    // blogs vanney table bata tyo id ko delete gar vaneko yaha
-     await blogs.destroy({
-        where : {
-            id : id
-        }
-    })
-//    await  sequelize.query('DELETE FROM blogs WHERE id=?',{
-//         replacements  : [id],
-//         type : QueryTypes.DELETE
-//     })
-   res.redirect("/")
-})
-
-//edit blog
-app.get("/edit/:id",async(req,res)=>{
-    const id=req.params.id
-    //find blog of that id
-    // find chai paila blog ko data rakhera tesma edit hune banauna lai
- const blog=   await blogs.findAll({
-    where:{
-        id:id
-    }
- })
-
-    res.render("editBlog",{blog:blog})
-})
-app.post("/editBlog/:id",async (req,res)=>{
-    const id = req.params.id
-    const title = req.body.title
-    const subTitle = req.body.subtitle
-    const description = req.body.description
-
-    // first approach 
-    // await  blogs.update(req.body,{
-    //     where :{
-    //         id : id
-    //     }
-    // })
-
-    // second approach 
-    await blogs.update({
-        title : title,
-        subTitle : subTitle,
-        description : description
-    },{
-        where : {
-            id : id
-        }
-    })
-
-    res.redirect("/single/" + id)  // update vayesi kun  page ko id ma jane 
-})
-
-//node js lai file access garna dey vanera prermission magne
-
-app.use(express.static("public/")) 
+app.use("",blogRoute) // localhost:3000 + /createBlog === localhost:3000/createBlog
+app.use("",authRoute)  // register 
+// if app.use('/auth',authRoute) yesari garya vaye localhost/auth/register hannu parcha
 app.listen(3000,()=>{
     console.log("NodeJs project has started at port 3000")
 })
