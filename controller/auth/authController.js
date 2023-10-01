@@ -1,67 +1,87 @@
-const { users } = require("../../model");
-const bcrypt = require("bcryptjs");
-const jwt=require("jsonwebtoken")
+const { users } = require("../../model")
+const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
 
-exports.renderRegisterform = (req, res) => {
-  res.render("register");
-};
-exports.registerUser = async (req, res) => {
-  const { email, username, password, confirmPassword } = req.body;
-  //const email=req.body.email yesari chutai chutai garda ni huncha emaill pass username lai
+exports.renderRegisterForm = (req,res)=>{
+    res.render("register")
+}
+// Alternative to arrow function 
+// exports.registerUser = function(req,res){
+//     res.render("register")
+// }
 
-  // data base ma insert hunu vanda agi check
-  if (password.toLowerCase() !== confirmPassword.toLowerCase())
-    //lowercase lada ni hjuncha nalada ni huncah
-    return res.send("password didnot matched");
-  // tolowercase nahalda if pw uppercsae ra lowercase cha vane ni password nmatch
+exports.registerUser = async(req,res)=>{
+   const {email,username,password,confirmPassword} = req.body
+   /*const email = req.body.email
+   const password = req.body.password
+   const username  = req.body.password*/
 
-  //insert into table(users)
-  await users.create({
-    email,
-    password: bcrypt.hashSync(password, 8),
-    username, // mathi ko variable use gareko
-  });
-  res.redirect("/login");
-};
-exports.renderLoginForm = (req, res) => {
-  console.log(req.body);
-};
-exports.loginUser = async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return res.send("email and password are required ");
-  }
-
-  const associateDataWithEmail = await users.findAll({
-    where: {
-      email,
-    },
-  });
-  if (associateDataWithEmail.length == 0) {
-    res.send("email doesnt exisst");
-    //data exist chaina vane o huncha length
-  } else {
-    const associatedEmailPassword = associateDataWithEmail[0].password;
-    const isMatched = bcrypt.compareSync(password, associatedEmailPassword); // true or false return garcha
-    if (isMatched) {
-      //generate token
-      //login success vayesi token banaucha
-      const token= jwt.sign({id:associateDataWithEmail},process.env.SECRETKEY,{
-        expiresIn:"30d"  //30 day ma token kam gardaina login hudaina
-      }) 
-      //.env file ma secret key rakhda milcha
-      res.cookie('token',token,{
-        secure:true,
-        expiresIn:120
-      })
-   console.log("this is token"+token)  // browser ma application vitra cokkie ma save huncha
-
-      res.sned("logged in succesfullyu");
-    } else {
-      res.send("invalid password");
+    // check if password matches with confirmPassword
+    // if(password.toLowerCase() !== confirmPassword.toLowerCase()){
+    //     return res.send("Password and confirmPassword doesn't matched")
+    // }
+    if(password !== confirmPassword){
+         res.send("Password and confirmPassword doesn't matched")
+         return
     }
 
-    //checking if password also matches
-  }
-  //
-};
+   // INSERT INTO Table(users)
+  await users.create({
+    email,
+    password : bcrypt.hashSync(password,8) ,
+    username
+   })
+   res.redirect("/login")
+}
+
+
+// LOGIN Starts from here
+
+exports.renderLoginForm = (req,res)=>{
+    res.render("login")
+}
+
+exports.loginUser = async (req,res)=>{
+   
+    const {email,password}= req.body
+    // SERVER SIDE VALIDATION 
+    if(!email || !password){
+        return res.send("Email and password are required")
+    }
+
+//    findByPk -> {} ,findAll -> [{}]
+    // check if that email exists or not
+   const associatedDataWithEmail =  await users.findAll({
+       where : {
+        email
+       }
+    })
+    if(associatedDataWithEmail.length == 0){
+         res.send("User with that email doesn't exists")
+    }else{
+          // check if password also matches
+    const associatedEmailPassword = associatedDataWithEmail[0].password
+       const isMatched =  bcrypt.compareSync(password,associatedEmailPassword) // true or false return
+       if(isMatched){
+        // GENERATE TOKEN HERE 
+
+        const token = jwt.sign({id:associatedDataWithEmail[0].id},process.env.SECRETKEY,{
+            expiresIn : '30d'
+        })
+        res.cookie('token',token) // browser ma application tab vitra cookie vanney ma save hunchha
+
+        res.send("Logged In success")
+       }else{
+        res.send("Invalid password")
+       }
+
+    }
+    // exist xaina vaney - > [],xa vaney [{name:"",password:"",email:"",id:""}]
+
+}
+
+
+exports.logOut = (req,res)=>{
+    res.clearCookie('token')
+    res.redirect("/login")
+}

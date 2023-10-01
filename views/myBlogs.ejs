@@ -5,31 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Website</title>
     <link rel="stylesheet" href="css/blogs.css">
-    
+   
 </head>
 <body>
-    <header>
-    
-        <%- include("component/navbar")  %> 
-    </header>
+
+    <%- include("component/navbar")  %>
+    <h1>My Blogs</h1>
 
     <div class="container">
 
-      <%  if(blogs.length == 0){ %>
-        <h1>No Blogs</h1>
 
-      <%  }else{ %>
-            <% blogs.forEach((blog)=>{ %>
+   
+              <%myBlogs.length > 0 && myBlogs.forEach((blog)=>{ %>
+
                 <div class="card">
-                    <h2><%- blog.title  %></h2>
+                    <h2><%- blog.title %></h2>
                     <h3><%- blog.subTitle %></h3>
-                    <img src="<%- blog.image %>" alt="" height="200px" width="200px" >
-                    <p><%- blog.description.slice(0,100) %>...</p>
+                    <p><%- blog.description %></p>
+         
                     <a href="/single/<%-blog.id %>">Read More</a>
                 </div>
-        <%       }) %>
-        
-        <% } %>
+
+              <% }) %>
 
 
      
