@@ -6,12 +6,6 @@ exports.renderCreateBlog = (req,res)=>{
 
 exports.createBlog = async (req,res)=>{
 
-    
-    //  const userId = req.user[0].id
-    //  console.log(req.userId)
-    // second approach
-    // const {title,description,subtitle} = req.body
-    // first approach
     const title = req.body.title
     const description  = req.body.description
     const subTitle = req.body.subtitle
@@ -23,7 +17,7 @@ exports.createBlog = async (req,res)=>{
     }
 
 // database ma halnu paryo , database sanaga kehi operation await halnu parney hunchha 
-// agadi , await halepaxi mathi async halnu parney hunchha 
+// agadi , await halepaxi mathi async halnu parcha
 await blogs.create({
     title : title,
     subTitle:subTitle,
