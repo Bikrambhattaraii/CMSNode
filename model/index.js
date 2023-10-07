@@ -1,7 +1,7 @@
 const dbConfig = require("../config/dbConfig");
 const { Sequelize, DataTypes } = require("sequelize");
 
-// la sequelize yo config haru lag ani database connect gardey vaneko hae 
+// la sequelize yo config haru lag ani database connect gardey vanekp 
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
