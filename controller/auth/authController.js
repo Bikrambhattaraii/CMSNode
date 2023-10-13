@@ -144,7 +144,8 @@ exports.handleOTP = async (req,res)=>{
       userData[0].otpGeneratedTime = null
       await userData[0].save()
 
-      res.redirect("/passwordChange")
+      res.redirect(`/passwordChange?email=${email}&otp=${otp}`)
+
      }else{
       res.send("Otp has expired")
      }
